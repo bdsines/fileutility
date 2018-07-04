@@ -1,0 +1,43 @@
+<link rel="import" href="../../lib/polymer/polymer-element.html">
+<link rel="import" href="../../lib/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../lib/paper-button/paper-button.html">
+<script type="text/javascript" src="../js/fileupload.js"></script>
+<dom-module id="fileutil-app">
+    <template>
+        <p>I'm a DOM element. This is my shadow DOM!</p>
+        <paper-button icon="upload" raised on-tap="openFileDialog">File</paper-button>
+
+    </template>
+    <script>
+        // let Polymer = require('polymer');
+        // var remote = require('electron').remote;
+
+        var dialog = require('electron').remote.dialog;
+        var fs=require('fs');
+        class FileUtilApp extends Polymer.Element {
+            static get is() { return "fileutil-app"; }
+            static get Properties() {
+                fileObject: {
+                    type: Object
+                }
+            }
+            get behaviors(){
+                return [FileUploadBehavior]
+            }
+            constructor() {
+                super();
+                this.textContent = "I'm fileutil main app.";
+            }
+            openFileDialog() {
+                FileUploadBehavior.openFile();
+                // dialog.showOpenDialog(function (fileNames) {
+                //     console.log(fileNames);
+                // });
+
+            }
+
+
+        }
+        customElements.define(FileUtilApp.is, FileUtilApp);
+    </script>
+</dom-module>
