@@ -28,6 +28,18 @@
                 super();
                 this.textContent = "I'm fileutil main app.";
             }
+            ready(){
+                super.ready();
+                console.log("fileutil app loaded");
+                window.addEventListener("fileutility-file-selected",e =>{
+                    console.log("event received",e.detail);
+                    FileUploadBehavior.parseFile(e.detail.fileName,e.detail.filecontent);
+                });
+                window.addEventListener("fileutility-file-parsed",e =>{
+                    console.log("event received",e.detail);
+                    // FileUploadBehavior.parseFile(e.detail.fileName,e.detail.filecontent);
+                });
+            }
             openFileDialog() {
                 FileUploadBehavior.openFile();
                 // dialog.showOpenDialog(function (fileNames) {
