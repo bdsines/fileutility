@@ -1,11 +1,18 @@
 <link rel="import" href="../../lib/polymer/polymer-element.html">
 <link rel="import" href="../../lib/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../lib/paper-button/paper-button.html">
+<link rel="import" href="../../lib/paper-item/paper-item.html">
 <script type="text/javascript" src="../js/fileupload.js"></script>
 <dom-module id="fileutil-app">
     <template>
         <p>I'm a DOM element. This is my shadow DOM!</p>
         <paper-button icon="upload" raised on-tap="openFileDialog">File</paper-button>
+        <dom-repeat items="[[filecontent]]"> 
+            <template>
+                <div> [[index]] </div>
+            </template>
+    
+        </dom-repeat>
 
     </template>
     <script>
@@ -17,8 +24,8 @@
         class FileUtilApp extends Polymer.Element {
             static get is() { return "fileutil-app"; }
             static get Properties() {
-                fileObject: {
-                    type: Object
+                filecontent: {
+                    type: Array
                 }
             }
             get behaviors(){
@@ -37,6 +44,7 @@
                 });
                 window.addEventListener("fileutility-file-parsed",e =>{
                     console.log("event received",e.detail);
+                    this.set("filecontent",e.detail.filecontent);
                     // FileUploadBehavior.parseFile(e.detail.fileName,e.detail.filecontent);
                 });
             }
